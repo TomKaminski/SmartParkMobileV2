@@ -26,6 +26,7 @@
     <script src="scripts/app/common/accountService.js"></script>
     <script src="scripts/app/common/globalLoadingService.js"></script>
     <script src="scripts/app/common/loadingContentService.js"></script>
+    <script src="scripts/app/common/backButtonManager.js"></script>
     <script src="scripts/app/common/notificationsService.js"></script>
     <script src="scripts/app/common/apiFactory.js"></script>
     <script src="scripts/app/common/httpRequestInterceptorFactory.js"></script>
@@ -39,7 +40,7 @@
 
     <!--############################# LAYOUT VIEW ###############################-->
     <script id="templates/layout.html" type="text/ng-template">
-        <ion-side-menus>
+        <ion-side-menus enable-menu-with-back-views="true">
             <ion-side-menu-content>
                 <ion-footer-bar class="bar-smart-blue">
                     <div class="buttons">

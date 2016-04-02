@@ -89,9 +89,11 @@
         }
     });
 
-    app.run(function ($rootScope) {
-        $rootScope.loadingContainer = {}
-
+    app.run(function ($rootScope, $ionicPlatform) {
+        $rootScope.loadingContainer = {};
+        $ionicPlatform.onHardwareBackButton(function () {
+            navigator.app.exitApp();
+        });
     });
 })();
 
