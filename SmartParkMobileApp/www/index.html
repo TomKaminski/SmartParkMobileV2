@@ -1,0 +1,288 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://smartparkath.azurewebsites.net data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link href="css/ionic.min.css" rel="stylesheet" />
+    <link href="css/toast.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>SmartPARK</title>
+</head>
+<body ng-cloak>
+    <ion-nav-view name="layout"></ion-nav-view>
+
+    <script src="scripts/ionic.bundle.js"></script>
+    <script src="scripts/angular-messages.min.js"></script>
+    <script src="scripts/ionic-toast.js"></script>
+    <script src="scripts/ng-cordova.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="scripts/platformOverrides.js"></script>
+
+    <script src="scripts/app/app.js"></script>
+    <script src="scripts/app/directives/loaderDirective.js"></script>
+    <script src="scripts/app/common/accountService.js"></script>
+    <script src="scripts/app/common/globalLoadingService.js"></script>
+    <script src="scripts/app/common/loadingContentService.js"></script>
+    <script src="scripts/app/common/notificationsService.js"></script>
+    <script src="scripts/app/common/apiFactory.js"></script>
+    <script src="scripts/app/common/httpRequestInterceptorFactory.js"></script>
+    <script src="scripts/app/common/localStorageFactory.js"></script>
+    <script src="scripts/app/common/baseCtrl.js"></script>
+    <script src="scripts/app/controllers/aboutCtrl.js"></script>
+    <script src="scripts/app/controllers/forgotCtrl.js"></script>
+    <script src="scripts/app/controllers/homepageCtrl.js"></script>
+    <script src="scripts/app/controllers/layoutCtrl.js"></script>
+    <script src="scripts/app/controllers/settingsCtrl.js"></script>
+
+    <!--############################# LAYOUT VIEW ###############################-->
+    <script id="templates/layout.html" type="text/ng-template">
+        <ion-side-menus>
+            <ion-side-menu-content>
+                <ion-footer-bar class="bar-smart-blue">
+                    <div class="buttons">
+                        <h1 class="title"><img src="../images/swipe-icon.png" />PRZESUŃ, BY WYŚWIETLIC MENU</h1>
+                        <button class="button button-icon button-clear ion-navicon" ng-click="layout.toggleLeft()"></button>
+                    </div>
+                </ion-footer-bar>
+                <ion-nav-view name="content"></ion-nav-view>
+            </ion-side-menu-content>
+
+            <ion-side-menu side="left" class="side-menu-smart-blue">
+                <ion-content overflow-scroll="false" has-bouncing="false">
+                    <div class="row side-menu-logo">
+                        <div class="col col-67">
+                            <img src="../images/logo_white.png" />
+                        </div>
+                        <div class="col col-33 menu-text">MENU</div>
+                    </div>
+                    <div class="list" id="layoutList">
+                        <div ng-if="layout.getUserContext().loggedIn===true">
+                            <div class="item" style="text-transform: none">
+                                <b>Witaj, {{layout.getUserContext().userName}}</b>
+                                <div class="border-bottom-fixed"></div>
+                            </div>
+                            <div class="item" ng-click="layout.goTo('app.homepage')">
+                                <i class="icon ion-ios-home-outline"></i>Home
+                                <div class="border-bottom-fixed"></div>
+                            </div>
+                            <div class="item" ng-click="layout.goTo('app.settings')">
+                                <i class="icon ion-ios-gear-outline"></i>Ustawienia
+                                <div class="border-bottom-fixed"></div>
+                            </div>
+                            <div class="item" ng-click="layout.logout()">
+                                <i class="icon ion-android-exit"></i>Wyloguj
+                                <div class="border-bottom-fixed"></div>
+                            </div>
+                        </div>
+                        <div ng-if="layout.getUserContext().loggedIn===false">
+                            <div class="item" ng-click="layout.goTo('app.homepage')">
+                                <i class="icon ion-ios-home-outline"></i>Home
+                                <div class="border-bottom-fixed"></div>
+                            </div>
+                            <div class="item" ng-click="layout.goTo('app.forgot')">
+                                <i class="icon ion-ios-unlocked-outline"></i> Zapomniane hasło
+                                <div class="border-bottom-fixed"></div>
+                            </div>
+                        </div>
+                        <div class="item" ng-click="layout.goTo('app.about')">
+                            <img src="../images/smartpark-mini.png" style="margin-left: 7px;" />O aplikacji
+                            <div class="border-bottom-fixed"></div>
+                        </div>
+                        <div class="item">
+                            <img src="../images/swipe-icon-left.png" /> Przesuń, aby zwinąć
+                            <div class="border-bottom-fixed"></div>
+                        </div>
+                    </div>
+                    <div class="sidenav-copyright"><span class="copyright-sign">&copy;</span><br />copyright smartPARK</div>
+                </ion-content>
+            </ion-side-menu>
+        </ion-side-menus>
+    </script>
+
+    <!--############################# HOMEPAGE VIEW ###############################-->
+    <script id="templates/home.html" type="text/ng-template">
+        <ion-view title="SmartPark - Home">
+            <ion-content has-bouncing="false" overflow-scroll="false">
+                <div class="col-50 col-offset-25 margin-top-20">
+                    <img src="../images/logo.png" />
+                </div>
+                <div class="margin-top-20">
+                    <div ng-if="home.user.loggedIn===true">
+                        <p class="padding" id="logged-in-text">
+                            <b>Zalogowany jako:</b><br /><span class="smart-blue-color">{{home.user.userEmail}}</span>
+                        </p>
+                        <p class="text-center" id="charges">Masz <b> {{home.user.charges}} </b> wyjazdów</p>
+                        <div class="row">
+                            <div class="col-60 col-offset-20">
+                                <button class="button button-full refresh-button no-padding" ng-class="{'disabled':home.isGlobalLoadingOn() == true}" ng-click="home.refresh($event)">
+                                    Odśwież wyjazdy
+                                </button>
+                                <loader loadname="refreshChargesLoading" style="float: right;" class="smart-blue-color spinner-positive"></loader>
+
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-80 col-offset-10">
+
+                                <p class="open-gate-header">Otwórz bramę!</p>
+                                <button id="openGates" class="button button-full open-gate-button" ng-click="home.openGates()" ng-model="home.countText" ng-class="{'disabled':!home.isGateBtnActive || home.charges == 0 || home.isGlobalLoadingOn() == true}">
+
+                                    <img src="images/smartpark-mini.png" />
+                                    <span ng-bind-html="home.gateBtnText"></span>
+                                </button>
+                                <loader loadname="openGateLoading" style="float: right;" class="smart-blue-color spinner-positive"></loader>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-if="home.user.loggedIn === false" id="login-section">
+                        <h1>
+                            <img src="../images/Lock_logo.png" />LOGOWANIE
+                        </h1>
+                        <div class="row">
+                            <div class="col-80 col-offset-10">
+                                <div class="list" ng-form name="form">
+                                    <label class="item item-input item-floating-label smart-input" ng-class="{'has-error':form.email.$invalid && form.email.$touched}">
+                                        <span class="input-label smart-label">Adres email</span>
+                                        <input type="email" placeholder="Email" ng-model="email" required name="email" id="email">
+                                        <span ng-messages="form.email.$error" ng-show="form.email.$touched" class="ng-messages-errors">
+                                            <span ng-message="email">Wartość nie jest prawidłowym adresem email.</span>
+                                            <span ng-message="required">Adres email jest wymagany.</span>
+                                        </span>
+                                    </label>
+                                    <label class="item item-input item-floating-label smart-input" id="passLabel" ng-class="{'has-error':form.password.$invalid && form.password.$touched}">
+                                        <span class="input-label smart-label">Hasło</span>
+                                        <input type="password" placeholder="Hasło" required name="password" ng-model="password" id="password">
+                                        <span ng-messages="form.password.$error" ng-show="form.password.$touched" class="ng-messages-errors">
+                                            <span ng-message="required">Hasło jest wymagane.</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <button class="button button-login-smart button-full" ng-class="{'disabled':form.$invalid || home.isGlobalLoadingOn() == true}" ng-click="home.login(email,password)">
+                                    <p>Zaloguj się<i class="icon ion-android-send"></i></p>
+                                </button>
+                                <loader loadname="loginLoading" style="float: right;" class="smart-blue-color spinner-positive"></loader>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </ion-content>
+        </ion-view>
+    </script>
+
+    <!--############################# ABOUT VIEW ###############################-->
+<script id="templates/about.html" type="text/ng-template">
+        <ion-view title="SmartPark - O aplikacji">
+            <ion-content has-bouncing="false" overflow-scroll="false">
+                <div class="row">
+                    <div class="col-50 col-offset-25 margin-top-20" style="margin-bottom:20px">
+                        <img src="../images/logo.png" />
+                    </div>
+                </div>
+                <div class="row" id="forgot-section" style="margin-top:0">
+                    <div class="col padding">
+                        <h1 style="margin-bottom:20px">
+                            O APLIKACJI
+                        </h1>
+                        <h2>
+                            <b>
+                                smartPARK.<br />
+                                INNOWACJA I WYGODA.
+                            </b>
+                        </h2>
+                        <p class="desc text-center smart-blue-color">
+                            system został stworzony przez studenta <b>
+                                Informatyki na Wydziale
+                                Budowy Maszyn i Informatyki
+                            </b> jako projekt pracy inżynierskiej.
+                            Zadaniem systemu jest ułatwienie studentom płatności
+                            za wjazd na parking uczelni oraz wyjazd.<br />
+                            <br />
+                            Na <b>smartPARK</b> składają się trzy elementy: infokiosk, w którym
+                            możliwe jest wykupienie
+                            abonamentu na wyjazdy oraz płatność kartą, aplikacja mobilna, która służy do łatwego,
+                            wygodnego i szybkiego otwierania szlabanu oraz serce całego systemu - <b>Portal</b>
+                        </p>
+                        <h2>
+                            dowiedz się więcej na:<br /><br />
+                            <a href="http://smartparkath.azurewebsites.net"><b>strona powitalna smartPARK</b></a><br />
+                            <a href="http://smartparkath.azurewebsites.net/Portal"><b>portal smartPARK</b></a>
+
+                        </h2>
+                    </div>
+                </div>
+            </ion-content>
+        </ion-view>
+    </script>
+
+    <!--############################# SETTINGS VIEW ###############################-->
+<script id="templates/settings.html" type="text/ng-template">
+        <ion-view title="SmartPark - Ustawienia">
+            <ion-content has-bouncing="false" overflow-scroll="false">
+                <div class="row">
+                    <div class="col-50 col-offset-25 margin-top-20" style="margin-bottom:50px">
+                        <img src="../images/logo.png" />
+                    </div>
+                </div>
+                <div class="row" id="forgot-section" style="margin-top:0">
+                    <div class="col padding">
+                        <h1 style="margin-bottom:20px">
+                            USTAWIENIA KONTA
+                        </h1>
+                        <p class="desc text-center smart-blue-color margin-bottom-20">
+                            Aby zmienić ustawienia swojego konta stuknij w poniższy link, przeniesie Cię on do ustawień konta na <b>portalu smartPARK</b>.<br /><br /> Po przeniesieniu na stronę portalu będziesz mógł zmienić <b>swoje hasło, dane kontaktowe, przekazać swoje wyjazdy innej osobie</b> oraz wiele innych.<br /><br />
+                            <b style="font-style: italic;">Uwaga, może być wymagane ponowne zalogowanie do portalu - użyj takich samych danych, które zostały użyte do zalogowania się do aplikacji mobilnej.</b>
+                        </p>
+                            <a class="button button-login-smart button-full" href="http://smartparkath.azurewebsites.net/Portal/Ustawienia"><p>przejdź do ustawień<i class="icon ion-android-send"></i></p></a>
+                    </div>
+                </div>
+            </ion-content>
+        </ion-view>
+    </script>
+
+    <!--############################# FORGOT PASSWORD VIEW ###############################-->
+    <script id="templates/forgot.html" type="text/ng-template">
+        <ion-view title="SmartPark - Zapomniane hasło">
+            <ion-content has-bouncing="false" overflow-scroll="false">
+                <div class="row">
+                    <div class="col-50 col-offset-25 margin-top-20">
+                        <img src="../images/logo.png" />
+                    </div>
+                </div>
+                <div class="row" id="forgot-section">
+                    <div class="col-80 col-offset-10 margin-top-20">
+
+                        <h1>
+                            <img src="../images/Lock_logo.png" />PRZYWRACANIE HASŁA
+                        </h1>
+                        <p class="desc">Aby zmienić hasło wpisz poniżej adres email, który podawałeś przy rejestracji w systemie smartPARK.</p>
+                        <p class="desc">Na podany adres email zostanie wysłana wiadomość z dalszymi instrukcjami.</p>
+                        <div class="list" ng-form name="form">
+                            <label class="item item-input item-floating-label smart-input" ng-class="{'has-error':form.email.$invalid && form.email.$touched}">
+                                <span class="input-label smart-label">Adres email</span>
+                                <input type="email" placeholder="Email" ng-model="email" required name="email"
+                                       id="email">
+                                <span ng-messages="form.email.$error" ng-show="form.email.$touched" class="ng-messages-errors">
+                                    <span ng-message="email">Wartość nie jest prawidłowym adresem email.</span>
+                                    <span ng-message="required">Adres email jest wymagany.</span>
+                                </span>
+                            </label>
+                        </div>
+
+                        <button class="button button-full button-login-smart" ng-click="forgot.forgotPassword(email)" ng-class="{'disabled':form.$invalid || home.isGlobalLoadingOn() == true}">
+                            <p>Przypomnij hasło<i class="icon ion-android-send"></i></p>
+                        </button>
+                        <loader loadname="forgotPasswordLoading" style="float: right;" class="smart-blue-color spinner-positive"></loader>
+                    </div>
+                </div>
+            </ion-content>
+        </ion-view>
+    </script>
+</body>
+</html>
