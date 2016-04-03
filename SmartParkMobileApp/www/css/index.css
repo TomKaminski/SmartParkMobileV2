@@ -1,3 +1,42 @@
+.platform-windowsphone8 .spinner-ios svg,
+.platform-windowsphone8 .spinner-ios-small svg,
+.platform-windowsphone8 .spinner-circles svg,
+.platform-windowsphone8 .spinner-crescent svg {
+  animation: spin 1250ms linear infinite;
+}
+.platform-windowsphone8 .spinner-spiral svg {
+  animation: spin 750ms linear infinite;
+}
+
+.platform-edge .spinner-ios svg,
+.platform-edge .spinner-ios-small svg,
+.platform-edge .spinner-circles svg,
+.platform-edge .spinner-crescent svg {
+  animation: spin 1250ms linear infinite;
+}
+.platform-edge .spinner-spiral svg {
+  animation: spin 750ms linear infinite;
+}
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+
 @font-face {
     font-family: 'Titillium Web';
     font-style: normal;

@@ -1,10 +1,17 @@
 ﻿(function () {
     'use strict';
 
-    function forgotController(accountService, apiFactory, $controller, $scope, CONFIG, loadingContentService, ionicToast) {
-        angular.extend(this, $controller('baseCtrl', { $scope: $scope }));
+    function forgotController(accountService, apiFactory, CONFIG, loadingContentService, ionicToast, globalLoadingService) {
 
         var self = this;
+
+        self.toggleGlobalLoading = function (turnOn) {
+            globalLoadingService.setIsLoading(turnOn);
+        }
+
+        self.isGlobalLoadingOn = function () {
+            this.globalLoading = globalLoadingService.isContentLoading();
+        }
 
         self.forgotPassword = function (email) {
             apiFactory.genericPost(
@@ -27,7 +34,7 @@
         }
     }
 
-    angular.module('app').controller('forgotCtrl', ['accountService', 'apiFactory', '$controller', '$scope', 'CONFIG', 'loadingContentService', 'ionicToast', forgotController]);
+    angular.module('app').controller('forgotCtrl', ['accountService', 'apiFactory', 'CONFIG', 'loadingContentService', 'ionicToast','globalLoadingService', forgotController]);
 })();
 
 

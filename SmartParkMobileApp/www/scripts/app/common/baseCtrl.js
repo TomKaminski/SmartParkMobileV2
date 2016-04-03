@@ -1,12 +1,8 @@
 ﻿(function () {
     'use strict';
 
-    function baseCtrl($scope, accountService, globalLoadingService) {
+    function baseCtrl(globalLoadingService) {
         this.globalLoading = false;
-
-        this.refreshUserContext = function () {
-            this.user = accountService.initUserContext();
-        }
 
         this.toggleGlobalLoading = function (turnOn) {
             globalLoadingService.setIsLoading(turnOn);
@@ -17,5 +13,5 @@
         }
     }
 
-    angular.module('app').controller('baseCtrl', ['$scope','accountService','globalLoadingService', baseCtrl]);
+    angular.module('app').controller('baseCtrl', ['globalLoadingService', baseCtrl]);
 })();

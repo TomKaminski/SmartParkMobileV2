@@ -5,8 +5,9 @@
         angular.extend(this, $controller('baseCtrl', { $scope: $scope }));
         var self = this;
         backButtonManager.disable();
+
         self.getUserContext = function() {
-            return accountService.initUserContext();
+            return accountService.userData;
         }
 
         self.toggleLeft = function () {

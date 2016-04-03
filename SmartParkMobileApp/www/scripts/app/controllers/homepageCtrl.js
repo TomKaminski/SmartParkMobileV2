@@ -1,12 +1,13 @@
 ﻿(function () {
     'use strict';
 
-    function homepageController(accountService, apiFactory, $timeout, $controller, $scope, CONFIG, loadingContentService, ionicToast) {
+    function homepageController(accountService, apiFactory, $timeout, $controller, $scope, CONFIG, loadingContentService, ionicToast, notificationService) {
         angular.extend(this, $controller('baseCtrl', { $scope: $scope }));
 
         var self = this;
         self.isGateBtnActive = true;
-        self.refreshUserContext();
+        accountService.initUserContext();
+        self.user = accountService.userData;
         self.gateBtnText = "NACIŚNIJ,<br/>ABY <b>OTWORZYĆ</b>";
 
         self.login = function (email, password) {
@@ -17,7 +18,8 @@
                },
                function (data) {
                    accountService.login(data.Result.PasswordHash, email, data.Result.Charges, data.Result.Name);
-                   self.refreshUserContext();
+                   self.charges = accountService.userData.charges;
+
                },
                function () {
                    loadingContentService.setIsLoading('loginLoading', false);
@@ -32,16 +34,15 @@
 
         self.logout = function () {
             accountService.logout();
-            self.refreshUserContext();
         }
 
         var i = 5;
-        function removeDisabled() {
+        function removeDisabled(charges) {
             if (i !== 0) {
                 $timeout(function () {
                     i--;
                     self.gateBtnText = i;
-                    removeDisabled();
+                    removeDisabled(charges);
                 }, 1000);
             }
             if (i === 0) {
@@ -53,45 +54,45 @@
 
         self.openGates = function () {
             self.isGateBtnActive = false;
-            self.refreshUserContext();
             if (self.user.loggedIn === true) {
-                apiFactory.genericPost(
-                     function () {
-                         self.toggleGlobalLoading(true);
-                         loadingContentService.setIsLoading('openGateLoading', true);
-                     },
-                     function (data) {
-                         accountService.updateCharges(data.Result);
-                         self.refreshUserContext();
-                         if (data.Result !== 0) {
-                             self.gateBtnText = 5;
-                             removeDisabled();
-                             ionicToast.show('Brama otwierana, miłego dnia!', 'bottom', false, 5000, false);
-                         } else {
-                             ionicToast.show('Brak wyjazdów, doładuj konto!', 'bottom', false, 4000, true);
-                             self.isGateBtnActive = true;
-                         }
-                         loadingContentService.setIsLoading('openGateLoading', false);
-                     },
-                     function (data) {
-                         if (!data.IsValid) {
-                             self.isGateBtnActive = true;
-                             accountService.logout();
-                         }
-                         self.refreshUserContext();
-                         self.toggleGlobalLoading(false);
-                         loadingContentService.setIsLoading('openGateLoading', false);
-                     },
-                     function () {
-                         self.toggleGlobalLoading(false);
-                         loadingContentService.setIsLoading('openGateLoading', false);
-                     },
-                     apiFactory.apiEnum.OpenGate, { Email: self.user.userEmail });
+                self.toggleGlobalLoading(true);
+                loadingContentService.setIsLoading('openGateLoading', true);
+
+                apiFactory.post(apiFactory.apiEnum.OpenGate, { Email: self.user.userEmail }).then(function(data) {
+                    if (data.IsValid === true) {
+                        accountService.updateCharges(data.Result);
+                        if (data.Result !== 0) {
+                            self.gateBtnText = 5;
+                            removeDisabled(data.Result);
+                            ionicToast.show('Brama otwierana, miłego dnia!', 'bottom', false, 5000, false);
+                        } else {
+                            ionicToast.show('Brak wyjazdów, doładuj konto!', 'bottom', false, 4000, true);
+                            self.isGateBtnActive = true;
+                        }
+                        loadingContentService.setIsLoading('openGateLoading', false);
+                    } else {
+                        self.isGateBtnActive = true;
+                        accountService.logout();
+                    }
+                    notificationService.showNotifications(data);
+                    self.toggleGlobalLoading(false);
+                    loadingContentService.setIsLoading('openGateLoading', false);
+                }, function() {
+                    self.toggleGlobalLoading(false);
+                    loadingContentService.setIsLoading('openGateLoading', false);
+                    notificationService.showNotification("Wystąpił błąd podczas łączenia się z serwerem.", false);
+                });
+                //.finally(function () {
+                //    setTimeout(function () {
+                //        $scope.$apply(function () {
+                //            self.user.charges = parseInt(accountService.userData.charges);
+                //        });
+                //    }, 5000);
+                //});
             }
         }
 
         self.refresh = function () {
-            self.refreshUserContext();
             if (self.user.loggedIn === true) {
                 apiFactory.genericPost(
                     function () {
@@ -100,7 +101,6 @@
                     },
                     function (data) {
                         accountService.updateCharges(data.Result);
-                        self.refreshUserContext();
                     },
                     function () {
                         ionicToast.show('Liczba wyjazdów odświeżona', 'bottom', false, 4000, false);
@@ -117,7 +117,7 @@
 
     }
 
-    angular.module('app').controller('homepageCtrl', ['accountService', 'apiFactory', '$timeout', '$controller', '$scope', 'CONFIG', 'loadingContentService', 'ionicToast', homepageController]);
+    angular.module('app').controller('homepageCtrl', ['accountService', 'apiFactory', '$timeout', '$controller', '$scope', 'CONFIG', 'loadingContentService', 'ionicToast', 'notificationService', homepageController]);
 })();
 
 

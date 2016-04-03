@@ -52,11 +52,11 @@
         function genericPost(funcBefore, funcAfterValid, funcAfter, funcError, apiEnum, postData, options) {
             funcBefore();
             post(apiEnum, postData, options).then(function (data) {
-                if (data.IsValid) {
-                    funcAfterValid(data);
-                }
-                funcAfter(data);
-                notificationService.showNotifications(data);
+                    if (data.IsValid) {
+                        funcAfterValid(data);
+                    }
+                    funcAfter(data);
+                    notificationService.showNotifications(data);
             }, function (e) {
                 console.log(e);
                 funcError();
@@ -88,5 +88,5 @@
         };
     }
 
-    angular.module('app').factory('apiFactory', ['$http', '$q', 'CONFIG','notificationService', apiFactory]);
+    angular.module('app').factory('apiFactory', ['$http', '$q', 'CONFIG', 'notificationService', apiFactory]);
 })();
