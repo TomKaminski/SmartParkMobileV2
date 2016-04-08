@@ -23,7 +23,8 @@
 
     <script src="scripts/app/app.js"></script>
     <script src="scripts/app/directives/loaderDirective.js"></script>
-    <script src="scripts/app/common/accountService.js"></script>
+<script src="scripts/app/common/accountService.js"></script>
+    <script src="scripts/app/directives/chargesDirective.js"></script>
     <script src="scripts/app/common/globalLoadingService.js"></script>
     <script src="scripts/app/common/loadingContentService.js"></script>
     <script src="scripts/app/common/backButtonManager.js"></script>
@@ -114,7 +115,7 @@
                         <p class="padding" id="logged-in-text">
                             <b>Zalogowany jako:</b><br /><span class="smart-blue-color">{{home.user.userEmail}}</span>
                         </p>
-                        <p class="text-center" id="charges">Masz <b> {{home.user.charges}} </b> wyjazdów</p>
+                        <p class="text-center" id="charges">Masz <b> <charges></charges> </b> wyjazdów</p>
                         <div class="row">
                             <div class="col">
                                 <button class="button button-full refresh-button no-padding" ng-class="{'disabled':home.isGlobalLoadingOn() == true}" ng-click="home.refresh($event)">
