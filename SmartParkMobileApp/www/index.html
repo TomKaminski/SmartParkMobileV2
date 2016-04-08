@@ -57,7 +57,6 @@
                         <div class="col col-67">
                             <img src="../images/logo_white.png" />
                         </div>
-                        <div class="col col-33 menu-text">MENU</div>
                     </div>
                     <div class="list" id="layoutList">
                         <div ng-if="layout.getUserContext().loggedIn===true">
@@ -117,7 +116,7 @@
                         </p>
                         <p class="text-center" id="charges">Masz <b> {{home.user.charges}} </b> wyjazdów</p>
                         <div class="row">
-                            <div class="col-60 col-offset-20">
+                            <div class="col">
                                 <button class="button button-full refresh-button no-padding" ng-class="{'disabled':home.isGlobalLoadingOn() == true}" ng-click="home.refresh($event)">
                                     Odśwież wyjazdy
                                 </button>
@@ -127,7 +126,7 @@
                         </div>
                         <div class="row">
 
-                            <div class="col-80 col-offset-10">
+                            <div class="col">
 
                                 <p class="open-gate-header">Otwórz bramę!</p>
                                 <button id="openGates" class="button button-full open-gate-button" ng-click="home.openGates()" ng-model="home.countText" ng-class="{'disabled':!home.isGateBtnActive || home.charges == 0 || home.isGlobalLoadingOn() == true}">

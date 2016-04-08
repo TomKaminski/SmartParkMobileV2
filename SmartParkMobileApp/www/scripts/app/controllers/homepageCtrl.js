@@ -82,13 +82,6 @@
                     loadingContentService.setIsLoading('openGateLoading', false);
                     notificationService.showNotification("Wystąpił błąd podczas łączenia się z serwerem.", false);
                 });
-                //.finally(function () {
-                //    setTimeout(function () {
-                //        $scope.$apply(function () {
-                //            self.user.charges = parseInt(accountService.userData.charges);
-                //        });
-                //    }, 5000);
-                //});
             }
         }
 

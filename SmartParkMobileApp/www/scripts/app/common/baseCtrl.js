@@ -9,7 +9,7 @@
         }
 
         this.isGlobalLoadingOn = function () {
-            this.globalLoading = globalLoadingService.isContentLoading();
+            return globalLoadingService.isContentLoading();
         }
     }
 
