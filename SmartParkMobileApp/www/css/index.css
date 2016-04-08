@@ -1,9 +1,42 @@
 @font-face {
-    font-family: 'Material Design Icons';
-    font-style: normal;
-    font-weight: 400;
-    src: url(../fonts/material-design-icons/Material-Design-Icons.ttf) format("truetype");
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/material-design-icons/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(../fonts/material-design-icons/MaterialIcons-Regular.woff2) format('woff2'),
+       url(../fonts/material-design-icons/MaterialIcons-Regular.woff) format('woff'),
+       url(../fonts/material-design-icons/MaterialIcons-Regular.ttf) format('truetype');
 }
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
 
 @font-face {
     font-family: 'Titillium Web';
@@ -17,10 +50,6 @@
     font-style: normal;
     font-weight: 200;
     src: local("Titillium Web Light"), local("TitilliumWeb-Light"), url(../fonts/TitilliumWeb-Light.ttf) format("truetype");
-}
-
-.material-icons {
-    font-family: 'Material Design Icons'
 }
 
 a.button-collapse {
@@ -47,7 +76,7 @@ body {
     -webkit-user-select: none;
     background-color: #32383d;
     font-family: 'Titillium Web', sans-serif;
-    background: #ddd;
+    background: #6ea2d8;
     color: #333;
     font-size: 20px;
     -webkit-font-smoothing: antialiased;
@@ -117,7 +146,7 @@ img {
 /*############ NAVBAR ###################*/
 
 .bar-smart-blue {
-    background: #4a86c5;
+    background: #2e6cb2;
     color: white;
     border-color: #1c445f;
     border-top: 1px solid;
@@ -148,7 +177,7 @@ nav {
 }
 
 .side-menu-smart-blue {
-    background: #6ea2d8;
+    background: #2e6cb2;
     color: white;
     z-index: 9999;
 }
@@ -168,7 +197,7 @@ nav {
 
             .side-menu-smart-blue li.item a i {
                 font-size: 32px;
-                margin: 0 10px;
+                margin: 0 10px 0 5px;
             }
 
             .side-menu-smart-blue li.item a img {
@@ -203,6 +232,8 @@ nav {
         font-family: 'Titillium Web Light';
         font-size: 16px;
         text-align: center;
+        line-height: 1;
+        margin-top: 25px;
     }
 
         .side-menu-smart-blue .sidenav-copyright .copyright-sign {
@@ -215,33 +246,33 @@ nav {
 /*############ LOGIN SECTION ###################*/
 
 #login-section {
-    margin-top: 80px;
+    margin-top: 20px;
 }
 
 #forgot-section {
     margin-top: 60px;
 }
 
-    #login-section h1, #forgot-section h1 {
-        font-size: 40px;
+    #login-section p.card-title, #forgot-section p.card-title {
+        font-size: 28px;
         color: #4a86c5;
         font-family: 'Titillium Web Light';
         text-align: center;
-        line-height: 42px;
+        line-height: 28px;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: 40px;
+        margin-bottom: 10px;
     }
 
-    #forgot-section h1 {
+    #forgot-section p.card-title {
         font-size: 22px;
         line-height: 24px;
     }
 
 
-        #login-section h1 img, #forgot-section h1 img {
-            height: 40px;
+        #login-section p.card-title img, #forgot-section p.card-title img {
+            height: 28px;
             margin-right: 5px;
         }
 
@@ -357,4 +388,31 @@ button:hover {
 }
 
 @media screen and (orientation: landscape) {
+}
+
+
+.card .card-content p {
+    font-size: 0.8em;
+}
+
+input {
+    margin: 0 !important;
+}
+
+input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #2e6cb2;
+    box-shadow: 0 1px 0 0 #2e6cb2;
+}
+
+input:not([type]):focus:not([readonly]) + label, input[type=text]:focus:not([readonly]) + label, input[type=password]:focus:not([readonly]) + label, input[type=email]:focus:not([readonly]) + label, input[type=url]:focus:not([readonly]) + label, input[type=time]:focus:not([readonly]) + label, input[type=date]:focus:not([readonly]) + label, input[type=datetime]:focus:not([readonly]) + label, input[type=datetime-local]:focus:not([readonly]) + label, input[type=tel]:focus:not([readonly]) + label, input[type=number]:focus:not([readonly]) + label, input[type=search]:focus:not([readonly]) + label, textarea.materialize-textarea:focus:not([readonly]) + label {
+    color: #2e6cb2;
+}
+
+.btn {
+    background: #4a86c5;
+    font-size: 0.8em;
+}
+
+.btn:hover, .btn-large:hover, button:focus{
+    background-color: #4a86c5;
 }

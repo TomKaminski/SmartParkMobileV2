@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html ng-app="app">
+<html ng-app="app" style="height: 100%">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://smartparkath.azurewebsites.net data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <title>SmartPARK</title>
 </head>
-<body ng-cloak>
+<body ng-cloak style="height: 100%">
     <ui-view name="layout"></ui-view>
     <script type="text/javascript" src="scripts/platformOverrides.js"></script>
 
@@ -45,7 +45,7 @@
     <script src="scripts/app/index.js"></script>
 
 
-<script id="templates/layout.html" type="text/ng-template">
+    <script id="templates/layout.html" type="text/ng-template">
         <nav class="side-menu-smart-blue">
             <ul id="slide-out" class="side-nav side-menu-smart-blue">
                 <li>
@@ -53,7 +53,6 @@
                         <div class="col s8">
                             <img src="../images/logo_white.png" />
                         </div>
-                        <div class="col s4 menu-text">MENU</div>
                     </div>
                 </li>
                 <div ng-if="layout.getUserContext().loggedIn===true">
@@ -76,11 +75,17 @@
                 </div>
                 <div ng-if="layout.getUserContext().loggedIn===false">
                     <li class="item">
-                        <a ui-sref="app.homepage">Home</a>
+                        <a ui-sref="app.homepage">
+                            <i class="material-icons">&#xE88A;</i>
+                            Home
+                        </a>
                         <div class="border-bottom-fixed"></div>
                     </li>
                     <li class="item">
-                        <a ui-sref="app.forgot">Zapomniane hasło</a>
+                        <a ui-sref="app.forgot">
+                            <i class="material-icons">&#xE898;</i>
+                            Zapomniane hasło
+                        </a>
                         <div class="border-bottom-fixed"></div>
                     </li>
                 </div>
@@ -89,23 +94,69 @@
                     <div class="border-bottom-fixed"></div>
                 </li>
                 <li class="item">
-                    <a><img src="../images/swipe-icon-left.png" /> Przesuń, aby zwinąć</a>
+                    <a><img src="../images/swipe-icon-left.png" style="margin-right:15px" /> Przesuń, aby zwinąć</a>
 
                     <div class="border-bottom-fixed"></div>
                 </li>
+                <li>
+                    <div class="sidenav-copyright"><span class="copyright-sign">&copy;</span><br />copyright smartPARK</div>
+
+                </li>
             </ul>
             <a href="#" data-activates="slide-out" class="button-collapse">
-                
+
                 <img src="../images/swipe-icon.png" />przesuń, aby rozwinąć
-                <i class="material-icons">close</i>
+                <i class="material-icons">&#xE5D2;</i>
             </a>
         </nav>
-        <ui-view name="content"></ui-view>
+        <ui-view name="content" class="valign-wrapper" style="height:95%"></ui-view>
     </script>
 
     <!--############################# HOMEPAGE VIEW ###############################-->
-    <script id="templates/home.html" type="text/ng-template">
-        Home
+<script id="templates/home.html" type="text/ng-template">
+        <div class="row valign">
+            <div class="col s8 offset-s2">
+                <img src="../images/logo_white.png" />
+            </div>
+            <div class="col s12">
+                <div ng-form name="form">
+                    <div class="card white" id="login-section">
+                        <div class="card-content grey-text text-darken-3">
+                            <p class="card-title"><img src="../images/Lock_logo.png" />LOGOWANIE</p>
+                            <p class="center-align">zaloguj się do aplikacji</p>
+
+                            <div class="input-field">
+                                <input type="email" id="email" name="email" ng-model="email" required />
+                                <label for="email">Adres email</label>
+                                <span ng-messages="form.email.$error" ng-show="form.email.$touched" class="ng-messages-errors">
+                                    <span ng-message="email">Wartość nie jest prawidłowym adresem email.</span>
+                                    <span ng-message="required">Adres email jest wymagany.</span>
+                                </span>
+                            </div>
+
+                            <div class="input-field margin-bottom-20">
+                                <input type="password" id="password" name="password" ng-model="password" required />
+                                <label for="password">Hasło</label>
+                                <span ng-messages="form.password.$error" ng-show="form.password.$touched" class="ng-messages-errors">
+                                    <span ng-message="required">Hasło jest wymagane.</span>
+                                </span>
+                            </div>
+                            <div class="row">
+                                <button class="btn waves-effect waves-light right" ng-disabled="form.$invalid || home.isGlobalLoadingOn() == true" ng-class="{'disabled':form.$invalid || home.isGlobalLoadingOn() == true}" ng-click="home.login(email,password)">
+                                    Zaloguj
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                            <div class="row" style="margin-bottom:5px">
+                                <loader loadname="loginLoading"></loader>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </script>
 
     <!--############################# ABOUT VIEW ###############################-->

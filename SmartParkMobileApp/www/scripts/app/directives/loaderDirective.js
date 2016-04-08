@@ -6,7 +6,7 @@
         scope: {
             loadname: '@'
         },
-        template: '<ion-spinner icon="spiral"></ion-spinner>',
+        templateUrl: '../../loader.html',
         link: function ($scope, element) {
             $scope.$watch(function () {
                 return $rootScope.loadingContainer[$scope.loadname];
