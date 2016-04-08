@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html ng-app="app" style="height: 100%">
+<html ng-app="app">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://smartparkath.azurewebsites.net data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <title>SmartPARK</title>
 </head>
-<body ng-cloak style="height: 100%">
+<body ng-cloak>
     <ui-view name="layout"></ui-view>
     <script type="text/javascript" src="scripts/platformOverrides.js"></script>
 
@@ -109,13 +109,13 @@
                 <i class="material-icons">&#xE5D2;</i>
             </a>
         </nav>
-        <ui-view name="content" class="valign-wrapper" style="height:95%"></ui-view>
+        <ui-view name="content"></ui-view>
     </script>
 
     <!--############################# HOMEPAGE VIEW ###############################-->
 <script id="templates/home.html" type="text/ng-template">
         <div class="row valign">
-            <div class="col s8 offset-s2">
+            <div class="col s8 offset-s2" style="margin-top:70px">
                 <img src="../images/logo_white.png" />
             </div>
             <div class="col s12">

@@ -395,6 +395,10 @@ button:hover {
     font-size: 0.8em;
 }
 
+.card {
+    margin-bottom: 60px
+}
+
 input {
     margin: 0 !important;
 }
