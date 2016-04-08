@@ -1,15 +1,15 @@
 ﻿(function () {
     'use strict';
 
-    function homepageController(accountService, apiFactory, $timeout, $controller, $scope, CONFIG, loadingContentService, ionicToast, notificationService) {
+    function homepageController(accountService, apiFactory, $timeout, $controller, $scope, CONFIG, loadingContentService, notificationService) {
         angular.extend(this, $controller('baseCtrl', { $scope: $scope }));
 
         var self = this;
         self.isGateBtnActive = true;
         accountService.initUserContext();
-        self.user = accountService.userData;
+        self.user = accountService.userData; self.user.charges = accountService.userData.charges;
         self.gateBtnText = "NACIŚNIJ,<br/>ABY <b>OTWORZYĆ</b>";
-
+        self.chargess = 999;
         self.login = function (email, password) {
             apiFactory.genericPost(
                function () {
@@ -18,7 +18,6 @@
                },
                function (data) {
                    accountService.login(data.Result.PasswordHash, email, data.Result.Charges, data.Result.Name);
-                   self.charges = accountService.userData.charges;
 
                },
                function () {
@@ -64,9 +63,9 @@
                         if (data.Result !== 0) {
                             self.gateBtnText = 5;
                             removeDisabled(data.Result);
-                            ionicToast.show('Brama otwierana, miłego dnia!', 'bottom', false, 5000, false);
+                            //ionicToast.show('Brama otwierana, miłego dnia!', 'bottom', false, 5000, false);
                         } else {
-                            ionicToast.show('Brak wyjazdów, doładuj konto!', 'bottom', false, 4000, true);
+                            //ionicToast.show('Brak wyjazdów, doładuj konto!', 'bottom', false, 4000, true);
                             self.isGateBtnActive = true;
                         }
                         loadingContentService.setIsLoading('openGateLoading', false);
@@ -103,7 +102,7 @@
                         accountService.updateCharges(data.Result);
                     },
                     function () {
-                        ionicToast.show('Liczba wyjazdów odświeżona', 'bottom', false, 4000, false);
+                        //ionicToast.show('Liczba wyjazdów odświeżona', 'bottom', false, 4000, false);
                         loadingContentService.setIsLoading('refreshChargesLoading', false);
                         self.toggleGlobalLoading(false);
                     },
@@ -117,7 +116,7 @@
 
     }
 
-    angular.module('app').controller('homepageCtrl', ['accountService', 'apiFactory', '$timeout', '$controller', '$scope', 'CONFIG', 'loadingContentService', 'ionicToast', 'notificationService', homepageController]);
+    angular.module('app').controller('homepageCtrl', ['accountService', 'apiFactory', '$timeout', '$controller', '$scope', 'CONFIG', 'loadingContentService', 'notificationService', homepageController]);
 })();
 
 

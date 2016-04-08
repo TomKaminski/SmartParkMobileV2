@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    function forgotController(accountService, apiFactory, CONFIG, loadingContentService, ionicToast, globalLoadingService) {
+    function forgotController(accountService, apiFactory, CONFIG, loadingContentService, globalLoadingService) {
 
         var self = this;
 
@@ -20,7 +20,7 @@
                       loadingContentService.setIsLoading('forgotPasswordLoading', true);
                   },
                   function () {
-                      ionicToast.show('Wiadomość email została wysłana.', 'bottom', false, 5000, false);
+                     // ionicToast.show('Wiadomość email została wysłana.', 'bottom', false, 5000, false);
                   },
                   function () {
                       loadingContentService.setIsLoading('forgotPasswordLoading', false);
@@ -34,7 +34,7 @@
         }
     }
 
-    angular.module('app').controller('forgotCtrl', ['accountService', 'apiFactory', 'CONFIG', 'loadingContentService', 'ionicToast','globalLoadingService', forgotController]);
+    angular.module('app').controller('forgotCtrl', ['accountService', 'apiFactory', 'CONFIG', 'loadingContentService','globalLoadingService', forgotController]);
 })();
 
 

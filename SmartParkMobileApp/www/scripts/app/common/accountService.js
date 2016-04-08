@@ -33,6 +33,10 @@
             return refresh === true ? this.initUserContext() : this.userData;
         };
 
+        this.getCharges = function() {
+            return this.userData.charges;
+        }
+
         this.initUserContext = function () {
             if (this.userData.loggedIn === true && this.userData.memoryHash !== null) {
                 return this.userData;

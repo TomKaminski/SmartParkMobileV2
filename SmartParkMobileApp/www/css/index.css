@@ -1,41 +1,9 @@
-.platform-windowsphone8 .spinner-ios svg,
-.platform-windowsphone8 .spinner-ios-small svg,
-.platform-windowsphone8 .spinner-circles svg,
-.platform-windowsphone8 .spinner-crescent svg {
-  animation: spin 1250ms linear infinite;
+@font-face {
+    font-family: 'Material Design Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../fonts/material-design-icons/Material-Design-Icons.ttf) format("truetype");
 }
-.platform-windowsphone8 .spinner-spiral svg {
-  animation: spin 750ms linear infinite;
-}
-
-.platform-edge .spinner-ios svg,
-.platform-edge .spinner-ios-small svg,
-.platform-edge .spinner-circles svg,
-.platform-edge .spinner-crescent svg {
-  animation: spin 1250ms linear infinite;
-}
-.platform-edge .spinner-spiral svg {
-  animation: spin 750ms linear infinite;
-}
-
-@-webkit-keyframes spin {
-  from {
-    -webkit-transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-  }
-}
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
 
 @font-face {
     font-family: 'Titillium Web';
@@ -51,6 +19,28 @@
     src: local("Titillium Web Light"), local("TitilliumWeb-Light"), url(../fonts/TitilliumWeb-Light.ttf) format("truetype");
 }
 
+.material-icons {
+    font-family: 'Material Design Icons'
+}
+
+a.button-collapse {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+a.button-collapse img {
+    max-height: 100%;
+    width: auto;
+    margin-right: 10px;
+       
+}
+
+a.button-collapse i {
+    margin-left: auto;
+}
+
 body {
     -webkit-touch-callout: none;
     -webkit-text-size-adjust: none;
@@ -60,6 +50,8 @@ body {
     background: #ddd;
     color: #333;
     font-size: 20px;
+    -webkit-font-smoothing: antialiased;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
 }
 
 p, img, h1, h2, h3, h4, h5, div {
@@ -112,38 +104,6 @@ img {
     padding: 0 10px;
 }
 
-ion-spinner svg, .center {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-direction: normal;
-    -moz-box-direction: normal;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-wrap: nowrap;
-    -ms-flex-wrap: nowrap;
-    flex-wrap: nowrap;
-    -webkit-box-pack: center;
-    -moz-box-pack: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-align-content: stretch;
-    -ms-flex-line-pack: stretch;
-    align-content: stretch;
-    -webkit-box-align: center;
-    -moz-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    margin: auto;
-}
-
 #layoutList .item > a {
     color: black;
     text-decoration: none;
@@ -182,36 +142,42 @@ ion-spinner svg, .center {
             margin-right: 10px;
         }
 
+nav {
+    position: fixed;
+    bottom: 0;
+}
+
 .side-menu-smart-blue {
     background: #6ea2d8;
     color: white;
+    z-index: 9999;
 }
 
-    .side-menu-smart-blue .list .item {
-        background: #6ea2d8;
-        color: white;
+    .side-menu-smart-blue li.item {
         border: none;
-        margin: 0 -1px;
-        padding: 20px 10px;
         position: relative;
-        font-family: 'Titillium Web Light';
-        font-size: 16px;
-        text-transform: uppercase;
     }
 
-        .side-menu-smart-blue .list .item i {
-            font-size: 32px;
-            margin: 0 10px;
+        .side-menu-smart-blue li.item a {
+            color: white;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
         }
 
-        .side-menu-smart-blue .list .item img {
-            height: 32px;
-            width: auto;
-            margin: 0 10px;
-            padding-top: 5px;
-        }
+            .side-menu-smart-blue li.item a i {
+                font-size: 32px;
+                margin: 0 10px;
+            }
 
-        .side-menu-smart-blue .list .item .border-bottom-fixed {
+            .side-menu-smart-blue li.item a img {
+                height: 32px;
+                width: auto;
+                margin: 0 10px;
+            }
+
+        .side-menu-smart-blue li.item .border-bottom-fixed {
             border-bottom: 3px solid #1c445f !important;
             position: absolute;
             bottom: 0;
@@ -381,11 +347,11 @@ button:hover {
     font-family: 'Titillium Web';
 }
 
-#forgot-section h2 a{
-    color:#b0b0b0;
-    font-size: 16px;
-    line-height: 24px;
-}
+    #forgot-section h2 a {
+        color: #b0b0b0;
+        font-size: 16px;
+        line-height: 24px;
+    }
 
 @media screen and (orientation: portrait) {
 }

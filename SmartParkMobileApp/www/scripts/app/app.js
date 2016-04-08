@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    var app = angular.module('app', ['ngCordova', 'ui.router', 'ionic', 'ionic-toast', 'ngMessages']);
+    var app = angular.module('app', ['ui.router', 'ngMessages']);
 
     app.config(function ($httpProvider, $stateProvider, $urlRouterProvider, $locationProvider) {
         $httpProvider.interceptors.push('httpRequestInterceptorFactory');
@@ -89,11 +89,11 @@
         }
     });
 
-    app.run(function ($rootScope, $ionicPlatform) {
+    app.run(function ($rootScope) {
         $rootScope.loadingContainer = {};
-        $ionicPlatform.onHardwareBackButton(function () {
-            navigator.app.exitApp();
-        });
+        //$ionicPlatform.onHardwareBackButton(function () {
+        //    navigator.app.exitApp();
+        //});
     });
 })();
 
